@@ -84,6 +84,7 @@ public class GetTipovi extends AsyncTask <String, Void, String> {
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 	}
 }

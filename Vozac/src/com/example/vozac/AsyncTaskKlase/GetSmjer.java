@@ -11,10 +11,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import com.example.vozac.Drugi;
 import com.example.vozac.Postavke;
 import com.example.vozac.Klase.Linija;
 import com.example.vozac.Klase.Vozilo;
@@ -23,11 +25,13 @@ public class GetSmjer extends AsyncTask <String, Void, String> {
 
 	private Postavke activity;
 	private String l;
-
+	Intent in3;
+	
 	public GetSmjer (Postavke a)
     {
         this.activity = a;
     }
+	
 	
 	@Override
 	protected String doInBackground(String... params) {
@@ -63,14 +67,12 @@ public class GetSmjer extends AsyncTask <String, Void, String> {
 				for (int i=0; i<jsonObj.length(); i++) {
 					
 					l = jsonObj.getJSONObject(i).getString("smjer");		
-					smjerovi.add(l);
-					
-					Log.d ("smjer", l);
+					smjerovi.add(l);				
 				}
-
+				
 				String [] obaSmjera = new String[smjerovi.size()];
 				obaSmjera = smjerovi.toArray(obaSmjera);
-				
+			
 			    ArrayAdapter adapter3 = new ArrayAdapter(activity, android.R.layout.simple_spinner_item, obaSmjera);
 			    activity.smjer.setAdapter(adapter3);
 			} 

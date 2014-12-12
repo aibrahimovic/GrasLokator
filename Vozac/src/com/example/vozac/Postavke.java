@@ -39,6 +39,9 @@ public class Postavke extends Activity {
 	private String idKorisnika = null;
 	private String idVozila = null;
 	private String idLinija = null;
+	public String brojLinije = null;
+	public String smjer1 = null;
+	public String smjer2 = null;
 	
 	private Voznja voznja = new Voznja();
 	
@@ -129,8 +132,8 @@ public class Postavke extends Activity {
 	        	String b = linija.getSelectedItem().toString();
 	        	int indeks = linija.getSelectedItemPosition();
 	        	idLinija = idLinije.get(indeks); 
-	        	Log.d ("vazno idLinija", idLinija);
-	        	
+	        	Log.d ("broj Linije iz postavki", b);
+	        	brojLinije = b;
 	        	
 	        	if (!b.equals(" ")) {
 		        	t3.setVisibility(View.VISIBLE);
@@ -150,25 +153,39 @@ public class Postavke extends Activity {
 	        	if (!b.equals(" ")) {
 	        		pocni.setVisibility(View.VISIBLE);
 	        	}
+	        	smjer1 = b;
+	        	int indeks_s1 = smjer.getSelectedItemPosition();
+	        	if (indeks_s1 == 1) smjer2 = (String) smjer.getItemAtPosition(2);
+	        	else smjer2 = (String) smjer.getItemAtPosition(1);
 	        }    
 	        @Override
 	        public void onNothingSelected(AdapterView arg0) { }
 	    });
 	    
-	        
+	    final Intent in5 = new Intent(this, Drugi.class);        
 	    final PostVoznja pv = new PostVoznja(this);
 		pocni.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				//Intent i = new Intent (Postavke.this, Drugi.class);
-				//startActivity(i);
+				String [] smjerovi = dajSmjerove(smjer);
 				
 				zapocniVoznju();
 				pv.execute(voznja);
 			}
 		});
 		
+	}
+	
+	public void zapocniVoznju() {
+		voznja.setIdKorisnika(Integer.valueOf(idKorisnika));
+		voznja.setIdVozila(Integer.valueOf(idVozila));
+		voznja.setIdLinije(Integer.valueOf(idLinija));	
+		voznja.setBrojLinije(Integer.valueOf(brojLinije));
+		voznja.setUsername(username);
+		voznja.setPassword(password);
+		voznja.setSmjer1(smjer1);
+		voznja.setSmjer2(smjer2);
 	}
 	
 	public String[] getLinije() {
@@ -191,14 +208,13 @@ public class Postavke extends Activity {
 	public void setTipovi2(ArrayList<String> tipovi2) {
 		this.tipovi2 = tipovi2;
 	}
-	
-	public void zapocniVoznju() {
-		voznja.setIdKorisnika(Integer.valueOf(idKorisnika));
-		voznja.setIdVozila(Integer.valueOf(idVozila));
-		voznja.setIdLinije(Integer.valueOf(idLinija));	
-		voznja.setUsername(username);
-		voznja.setPassword(password);
+
+	public String [] dajSmjerove (Spinner sp) {
+		String [] s = new String[2];
+		s[0] = (String) sp.getItemAtPosition(0);
+		s[1] = (String) sp.getItemAtPosition(1);
+		return s;
 	}
-	
-	
+
 }
+

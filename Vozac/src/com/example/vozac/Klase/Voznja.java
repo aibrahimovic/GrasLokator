@@ -2,21 +2,24 @@ package com.example.vozac.Klase;
 
 public class Voznja {
 	
-	private int idVoznje;
+	private String idVoznje;
 	private int idVozila;
 	private int idStanice;
 	private int idKorisnika;
 	private int idLinije;
+	private int brojLinije;
 	private boolean aktivan;
 	private double lat;
 	private double lon;
 	private String username;
 	private String password;
+	private String smjer1;
+	private String smjer2;
 	
-	public int getIdVoznje() {
+	public String getIdVoznje() {
 		return idVoznje;
 	}
-	public void setIdVoznje(int idVoznje) {
+	public void setIdVoznje(String idVoznje) {
 		this.idVoznje = idVoznje;
 	}
 	public int getIdVozila() {
@@ -73,6 +76,22 @@ public class Voznja {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+	public int getBrojLinije() {
+		return brojLinije;
+	}
+	public void setBrojLinije(int brojLinije) {
+		this.brojLinije = brojLinije;
+	}
+	public String getSmjer1() {
+		return smjer1;
+	}
+	public void setSmjer1(String smjer1) {
+		this.smjer1 = smjer1;
+	}
+	public String getSmjer2() {
+		return smjer2;
+	}
+	public void setSmjer2(String smjer2) {
+		this.smjer2 = smjer2;
+	}
 }

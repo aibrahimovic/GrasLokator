@@ -25,6 +25,7 @@ import com.example.vozac.Drugi;
 import com.example.vozac.Postavke;
 import com.example.vozac.Klase.Voznja;
 
+
 public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 
 	private Voznja v;
@@ -37,10 +38,15 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 	private String idKorisnika = null;
 	private String idVozila = null;
 	private String idLinije = null;
+	public String brojLinije = null;
+	public String smjer1 = null;
+	public String smjer2 = null;
+	String id;
 	
-	public PostVoznja(Postavke a) {
+	public PostVoznja(Context a) {
 		this.activity = a;
 	}
+	
 
 	@Override
 	protected String doInBackground(Voznja... params) {
@@ -53,29 +59,32 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 		idKorisnika = String.valueOf(v.getIdKorisnika());
 		idVozila = String.valueOf(v.getIdVozila());
 		idLinije = String.valueOf(v.getIdLinije());
+		brojLinije = String.valueOf(v.getBrojLinije());
+		smjer1 = v.getSmjer1();
+		smjer2 = v.getSmjer2();
 		
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost("http://farisc.comlu.com/Voznje.php");
 		
+		Log.d("idKorisnika", idKorisnika);
+		Log.d("idVozila", idVozila);
+		Log.d("idLinije", idLinije);
+		
 		try {
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(7);
+			nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
+			nameValuePairs.add(new BasicNameValuePair("sifra", password));
 			nameValuePairs.add(new BasicNameValuePair("lat", lat));
 			nameValuePairs.add(new BasicNameValuePair("lon", lon));
 			nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
 			nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
 			nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-			for (int i=0; i<nameValuePairs.size(); i++) {
-				NameValuePair a = nameValuePairs.get(i);
-				String b = a.getValue();
-				Log.d("idKorisnika iz for-a", b);
-			}
 			
-			//HttpResponse response = httpclient.execute(httppost);
+			HttpResponse response = httpclient.execute(httppost);
 			//Log.d("response", EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
-			Log.d("ovdje", "ovdje");
-
+			return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,31 +93,37 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 
 	@Override
 	protected void onPostExecute(String response) {
+		
 		Log.d("info", "Usao u onPostExecute voznje");
-		Log.d("ovdje1", "ovdje1");
-		//Log.d("info", response);
-		String id;
-		
-		
-
 		try {
-			final JSONArray jsonObj = new JSONObject(response).getJSONArray("voznje");
-			id = jsonObj.getJSONObject(0).getString("idVoznje");
-
+			
+			Log.d("pokusaj 100", response);
+			id = response;
+			
+			Log.d("odgovor", response);
 			Log.d("ovo je id voznje", id);
+			
 			id = id.replace("<!-- Hosting24 Analytics Code -->", "");
 			id = id.replace("<script type=\"text/javascript\" src=\"http://stats.hosting24.com/count.php\"></script>", "");
 			id = id.replace("<!-- End Of Analytics Code -->", "");
-			Log.d("info2", response);
+			
+			Log.d("info2", id);
+			
+			//v.setIdVoznje(Integer.valueOf(id));	
 
-			v.setIdVoznje(Integer.valueOf(id));
-
+			
 			Intent in = new Intent(activity, Drugi.class);
 			in.putExtra("username", username);
 			in.putExtra("password", password);
+			in.putExtra("idKorisnika", idKorisnika);
 			in.putExtra("idVoznje", id);
 			in.putExtra("idVozila", idVozila);
-			in.putExtra("idLinije", idLinije);
+			in.putExtra("idLinija", idLinije);
+			in.putExtra("lat", lat);
+			in.putExtra("lon", lon);	
+			in.putExtra("brojLinije", brojLinije);
+			in.putExtra("smjer1", smjer1);
+			in.putExtra("smjer2", smjer2);
 
 			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activity.startActivity(in);
@@ -116,5 +131,6 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 }

@@ -55,13 +55,11 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 
 	@Override
 	protected void onPostExecute(String response) {
+		try {
+			
 		Log.d("info", "Usao u onPostExecute");
 		Log.d("info", response);
 		String id;
-
-		try {
-			// jsonObj = new
-			// JSONObject(response).getJSONArray("korisnik").toString("korisnikId");
 
 			final JSONArray jsonObj = new JSONObject(response).getJSONArray("korisnik");
 			//if (jsonObj.getJSONObject(0).isNull("idKorisnik")) {
