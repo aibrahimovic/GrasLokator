@@ -1,0 +1,141 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal|left"
+        android:orientation="vertical" >
+
+
+       
+    <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Tip vozila: "
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000066" />
+    
+    <View
+        android:id="@+id/linija1"
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:background="#000066" />
+    
+    <Spinner
+        android:id="@+id/tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/linija"
+        android:layout_marginTop="5dp"
+        tools:listitem="@android:layout/simple_spinner_dropdown_item" />
+    
+    <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Broj vozila:"
+            android:visibility="gone"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000066" />
+    
+    <View
+        android:id="@+id/linija4"
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:visibility="gone"
+		android:background="#000066" />
+
+    <Spinner
+        android:id="@+id/broj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tip"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        tools:listitem="@android:layout/simple_spinner_dropdown_item" />
+       
+ 
+    <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Linija: "
+            android:visibility="gone" 
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000066" />
+    
+    
+    <View
+        android:id="@+id/linija2"
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:background="#000066"
+		android:visibility="gone"/>
+    
+    <Spinner
+        android:id="@+id/linija"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        tools:listitem="@android:layout/simple_spinner_dropdown_item"/>
+    
+
+	<TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Smjer: "
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="gone" 
+            android:textColor="#000066" />
+    
+    <View
+        android:id="@+id/linija3"
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:background="#000066"
+		android:visibility="gone"  />
+    
+    <Spinner
+        android:id="@+id/smjer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        tools:listitem="@android:layout/simple_spinner_dropdown_item"
+        android:visibility="gone"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+    
+    <Button
+        android:id="@+id/vozi"
+        android:layout_width="302dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="450dp"
+        android:background="#000066"
+        android:fadingEdge="vertical"
+        android:text="Počni vožnju"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
+	</LinearLayout>
+</RelativeLayout>

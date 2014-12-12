@@ -1,0 +1,74 @@
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" > -->
+
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center|center_horizontal"
+    android:orientation="vertical" >
+    
+<!--    <Button
+        android:id="@+id/smjer"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="10dp"
+        android:text="Promjeni smjer" /> -->
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <Button
+        android:id="@+id/smjer"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="40dp"
+        android:background="#000066"
+        android:fadingEdge="vertical"
+        android:text="Promjeni smjer"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
+    
+    <Button
+        android:id="@+id/kvar"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:background="#000066"
+        android:fadingEdge="vertical"
+        android:text="Prijavi kvar"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
+    
+    <Button
+        android:id="@+id/odjava"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="70dp"
+        android:background="#000066"
+        android:fadingEdge="vertical"
+        android:text="Odjavi se"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>
+</RelativeLayout>

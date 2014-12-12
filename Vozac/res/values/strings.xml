@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Vozac</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_drugi">Drugi</string>
+    <string name="title_activity_kvar">Kvar</string>
+    <string name="title_activity_postavke">Postavke</string>
+
+</resources>

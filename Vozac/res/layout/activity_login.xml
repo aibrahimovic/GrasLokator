@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+
+	<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/slika"
+        android:layout_width="157dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/abc_ab_solid_light_holo" />
+    </LinearLayout>
+    
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:gravity="center_horizontal"
+	    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/naslov"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prijava"
+        android:layout_marginTop="200dp"
+        android:layout_below="@+id/slika"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000066" />
+    
+    <View
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:background="#000066" />
+
+    <AutoCompleteTextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:focusable="true"
+        android:hint="Username"
+        android:maxLines="1"
+        android:paddingTop="20dp"
+        android:singleLine="true"
+        android:textColorLink="#000066"/>
+    
+    <EditText
+            android:paddingTop="20dip"
+            android:id="@+id/sifra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Šifra"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pogrešni podaci"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <Button
+        android:id="@+id/prijava"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="70dp"
+        android:background="#000066"
+        android:fadingEdge="vertical"
+        android:text="Prijavi se"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>
+</RelativeLayout>
