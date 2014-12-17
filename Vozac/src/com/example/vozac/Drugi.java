@@ -2,6 +2,7 @@ package com.example.vozac;
 
 import com.example.vozac.AsyncTaskKlase.DeleteVoznja;
 import com.example.vozac.AsyncTaskKlase.PostVoznja;
+import com.example.vozac.AsyncTaskKlase.PutVoznja;
 import com.example.vozac.Klase.Voznja;
 
 import android.app.Activity;
@@ -28,6 +29,8 @@ public class Drugi extends Activity {
 	private Voznja voznja = new Voznja();
 	public TextView trenutni_smjer;
 	private String idVoznje = null;
+	private String lat = null;
+	private String lon = null;
 	Postavke p;
 	
 	@Override
@@ -35,18 +38,38 @@ public class Drugi extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_drugi);
 	
-		Intent in = getIntent();
+		Intent in = getIntent();	
+		Intent in7 = getIntent();
 		
-		username = in.getStringExtra("username");
-		password = in.getStringExtra("password");
-		idKorisnika = in.getStringExtra("idKorisnika");
-		idVozila = in.getStringExtra("idVozila");
-		idVoznje = in.getStringExtra("idVoznje");
-		idVoznje = String.valueOf(76);
-		idLinija = in.getStringExtra ("idLinija");
-		brojLinije = in.getStringExtra("brojLinije");
-		smjer1 = in.getStringExtra("smjer1");
-		smjer2 = in.getStringExtra("smjer2");
+		if (in7.getStringExtra("status") == "kvar") {
+			username = in7.getStringExtra("username");
+			password = in7.getStringExtra("password");
+			idKorisnika = in7.getStringExtra("idKorisnika");
+			idVozila = in7.getStringExtra("idVozila");
+			idVoznje = in7.getStringExtra("idVoznje");
+			idLinija = in7.getStringExtra ("idLinija");
+			brojLinije = in7.getStringExtra("brojLinije");
+			smjer1 = in7.getStringExtra("smjer1");
+			smjer2 = in7.getStringExtra("smjer2");
+			lat = in7.getStringExtra("lat");
+			lon = in7.getStringExtra("lon");
+		}
+		else {
+			username = in.getStringExtra("username");
+			password = in.getStringExtra("password");
+			idKorisnika = in.getStringExtra("idKorisnika");
+			idVozila = in.getStringExtra("idVozila");
+			idVoznje = in.getStringExtra("idVoznje");
+			idLinija = in.getStringExtra ("idLinija");
+			brojLinije = in.getStringExtra("brojLinije");
+			smjer1 = in.getStringExtra("smjer1");
+			smjer2 = in.getStringExtra("smjer2");
+			lat = in.getStringExtra("lat");
+			lon = in.getStringExtra("lon");
+		}
+		
+		PutVoznja putV = new PutVoznja (this);
+		putV.execute(username, password, idVoznje, lat, lon);
 		
 		Log.d("username u Drugi", username);
 		Log.d("password u Drugi", password);
@@ -56,7 +79,6 @@ public class Drugi extends Activity {
 		voznja.setUsername(username);
 		voznja.setPassword(password);
 	
-		
 		final Button kvar = (Button) findViewById (R.id.kvar);
 		final Button odjava = (Button) findViewById (R.id.odjava);
 		final Button smjer = (Button) findViewById (R.id.smjer);
@@ -73,25 +95,43 @@ public class Drugi extends Activity {
 
 		
 		final DeleteVoznja dv = new DeleteVoznja (this);
-        kvar.setOnClickListener(new View.OnClickListener() {
-			
+        
+		kvar.setOnClickListener(new View.OnClickListener() {	
 		@Override
 		public void onClick(View v) {
 			dv.execute(username, password, idVoznje);
-			Intent i = new Intent (Drugi.this, Kvar.class);
-			startActivity(i);	
+			Intent in6 = new Intent (Drugi.this, Kvar.class);
+
+			in6.putExtra("username", username);
+			in6.putExtra("password", password);
+			in6.putExtra("idKorisnika", idKorisnika);
+			in6.putExtra("idVoznje", idVoznje);
+			in6.putExtra("idVozila", idVozila);
+			in6.putExtra("idLinija", idLinija);
+			in6.putExtra("lat", lat);
+			in6.putExtra("lon", lon);	
+			in6.putExtra("brojLinije", brojLinije);
+			in6.putExtra("smjer1", smjer1);
+			in6.putExtra("smjer2", smjer2);
+
+			in6.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(in6);
+			
 			}
 		});
         
+        final DeleteVoznja dv3 = new DeleteVoznja (this);
         odjava.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				dv3.execute(username, password, idVoznje);
 				Intent i = new Intent (Drugi.this, Login.class);
 				startActivity(i);
 			}
 		});
 		
+        
         final DeleteVoznja dv2 = new DeleteVoznja(this);
         final PostVoznja pv2 = new PostVoznja(this);
         smjer.setOnClickListener(new View.OnClickListener() {
@@ -105,14 +145,15 @@ public class Drugi extends Activity {
 				smjer1 = pomocni;
 				
 				dv2.execute(username, password, idVoznje);
-				
 				zapocniVoznju();
 				pv2.execute(voznja);
 			}
 		});
 	}
 	
+	
 	public void zapocniVoznju() {
+		voznja.setIdVoznje(" ");
 		voznja.setIdKorisnika(Integer.valueOf(idKorisnika));
 		voznja.setIdVozila(Integer.valueOf(idVozila));
 		voznja.setIdLinije(Integer.valueOf(idLinija));
@@ -121,7 +162,6 @@ public class Drugi extends Activity {
 		voznja.setPassword(password);
 		voznja.setSmjer1(smjer1);
 		voznja.setSmjer2(smjer2);
-		
-		
 	}
+	
 }

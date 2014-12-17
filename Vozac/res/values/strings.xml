@@ -6,5 +6,6 @@
     <string name="title_activity_drugi">Drugi</string>
     <string name="title_activity_kvar">Kvar</string>
     <string name="title_activity_postavke">Postavke</string>
+    <string name="title_activity_splash">Splash</string>
 
 </resources>

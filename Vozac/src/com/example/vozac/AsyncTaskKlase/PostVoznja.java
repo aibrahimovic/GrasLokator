@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -33,58 +35,84 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 
 	private String username = null;
 	private String password = null;
-	private String lat = null;
-	private String lon = null;
+	private Double lat = null;
+	private Double lon = null;
+	private String s_lat = null;
+	private String s_lon = null;
 	private String idKorisnika = null;
 	private String idVozila = null;
 	private String idLinije = null;
 	public String brojLinije = null;
 	public String smjer1 = null;
 	public String smjer2 = null;
-	String id;
+	public String id;
+	public String idVoznje = " ";
 	
 	public PostVoznja(Context a) {
 		this.activity = a;
 	}
-	
 
+	
 	@Override
 	protected String doInBackground(Voznja... params) {
 		Log.d("info", "Usao u doInBackground u voznji");
 		v = params[0];
 		username = v.getUsername();
 		password = v.getPassword();
-		lat = String.valueOf(34);
-		lon = String.valueOf(12);
+		idVoznje = v.getIdVoznje();
+		
+		Log.d("idVOznje nakon klika iz kvar", idVoznje);
+		
 		idKorisnika = String.valueOf(v.getIdKorisnika());
 		idVozila = String.valueOf(v.getIdVozila());
 		idLinije = String.valueOf(v.getIdLinije());
 		brojLinije = String.valueOf(v.getBrojLinije());
 		smjer1 = v.getSmjer1();
 		smjer2 = v.getSmjer2();
-		
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://farisc.comlu.com/Voznje.php");
-		
-		Log.d("idKorisnika", idKorisnika);
-		Log.d("idVozila", idVozila);
-		Log.d("idLinije", idLinije);
+		s_lat = String.valueOf(v.getLat());
+		s_lon = String.valueOf(v.getLon());
 		
 		try {
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(7);
-			nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
-			nameValuePairs.add(new BasicNameValuePair("sifra", password));
-			nameValuePairs.add(new BasicNameValuePair("lat", lat));
-			nameValuePairs.add(new BasicNameValuePair("lon", lon));
-			nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
-			nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
-			nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			
-			HttpResponse response = httpclient.execute(httppost);
-			//Log.d("response", EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
-			return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost("http://farisc.comlu.com/Voznje.php");
 			
+			Log.d("idKorisnika", idKorisnika);
+			Log.d("idVozila", idVozila);
+			Log.d("idLinije", idLinije);
+			Log.d("idVoznje", idVoznje);
+		
+			
+			if (idVoznje != " ") {
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(8);
+				nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
+				nameValuePairs.add(new BasicNameValuePair("sifra", password));
+				nameValuePairs.add(new BasicNameValuePair("lat", s_lat));
+				nameValuePairs.add(new BasicNameValuePair("lon", s_lon));
+				nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
+				nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
+				nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
+				nameValuePairs.add(new BasicNameValuePair("idVoznje ", idVoznje ));
+				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				
+				HttpResponse response = httpclient.execute(httppost);
+				//return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+			}
+			
+			else {
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(7);
+				nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
+				nameValuePairs.add(new BasicNameValuePair("sifra", password));
+				nameValuePairs.add(new BasicNameValuePair("lat", s_lat));
+				nameValuePairs.add(new BasicNameValuePair("lon", s_lon));
+				nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
+				nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
+				nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
+				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				
+				HttpResponse response = httpclient.execute(httppost);
+				return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,24 +122,17 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 	@Override
 	protected void onPostExecute(String response) {
 		
+		
 		Log.d("info", "Usao u onPostExecute voznje");
 		try {
 			
-			Log.d("pokusaj 100", response);
-			id = response;
-			
-			Log.d("odgovor", response);
-			Log.d("ovo je id voznje", id);
-			
+			final String jsonObj = new JSONObject(response).getString("idVoznje");
+			id = jsonObj;
+				
 			id = id.replace("<!-- Hosting24 Analytics Code -->", "");
 			id = id.replace("<script type=\"text/javascript\" src=\"http://stats.hosting24.com/count.php\"></script>", "");
 			id = id.replace("<!-- End Of Analytics Code -->", "");
-			
-			Log.d("info2", id);
-			
-			//v.setIdVoznje(Integer.valueOf(id));	
-
-			
+				
 			Intent in = new Intent(activity, Drugi.class);
 			in.putExtra("username", username);
 			in.putExtra("password", password);
@@ -124,13 +145,14 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 			in.putExtra("brojLinije", brojLinije);
 			in.putExtra("smjer1", smjer1);
 			in.putExtra("smjer2", smjer2);
-
+	
 			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activity.startActivity(in);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-	}
+	}	
 }

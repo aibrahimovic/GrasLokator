@@ -1,6 +1,7 @@
 package com.example.vozac;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.vozac.AsyncTaskKlase.GetBrojVozila;
 import com.example.vozac.AsyncTaskKlase.GetLinije;
@@ -10,7 +11,11 @@ import com.example.vozac.AsyncTaskKlase.PostVoznja;
 import com.example.vozac.Klase.Voznja;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -24,6 +29,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Postavke extends Activity {
+	
+	public static Location mojaLokacija = null;
 	
 	private String[] brojevi;
 	private String[] linije;
@@ -42,6 +49,9 @@ public class Postavke extends Activity {
 	public String brojLinije = null;
 	public String smjer1 = null;
 	public String smjer2 = null;
+	public double lat = 0;
+	public double lon = 0;
+	
 	
 	private Voznja voznja = new Voznja();
 	
@@ -74,7 +84,6 @@ public class Postavke extends Activity {
 		final View l2 = (View) findViewById (R.id.linija2);
 		final View l3 = (View) findViewById (R.id.linija3);
 		final View l4 = (View) findViewById (R.id.linija4);
-
 		
 	    GetTipovi gp = new GetTipovi(this); 
 	    gp.execute(username, password);
@@ -91,7 +100,7 @@ public class Postavke extends Activity {
 		        	l4.setVisibility(View.VISIBLE);
 		        	broj.setVisibility(View.VISIBLE);
 		        	
-		        	Log.d("indekst tipa koji saljem", indeks);
+		        	Log.d("indeks tipa koji saljem", indeks);
 		        	gbv.execute(username, password, indeks);
 	        	}
 	        }    
@@ -167,9 +176,7 @@ public class Postavke extends Activity {
 		pocni.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				String [] smjerovi = dajSmjerove(smjer);
-				
+			public void onClick(View v) {				
 				zapocniVoznju();
 				pv.execute(voznja);
 			}
@@ -177,7 +184,9 @@ public class Postavke extends Activity {
 		
 	}
 	
+	
 	public void zapocniVoznju() {
+		voznja.setIdVoznje(" ");
 		voznja.setIdKorisnika(Integer.valueOf(idKorisnika));
 		voznja.setIdVozila(Integer.valueOf(idVozila));
 		voznja.setIdLinije(Integer.valueOf(idLinija));	
@@ -186,6 +195,12 @@ public class Postavke extends Activity {
 		voznja.setPassword(password);
 		voznja.setSmjer1(smjer1);
 		voznja.setSmjer2(smjer2);
+		//lat = mojaLokacija.getLatitude();
+		//lon = mojaLokacija.getLongitude();
+		voznja.setLat(lat);
+		voznja.setLon(lon);
+		Log.d("lat2", String.valueOf(lat));
+		Log.d("lon2", String.valueOf(lon));		
 	}
 	
 	public String[] getLinije() {
@@ -200,7 +215,6 @@ public class Postavke extends Activity {
 		getTipovi2().add(t);
 	}
 
-
 	public ArrayList<String> getTipovi2() {
 		return tipovi2;
 	}
@@ -208,13 +222,11 @@ public class Postavke extends Activity {
 	public void setTipovi2(ArrayList<String> tipovi2) {
 		this.tipovi2 = tipovi2;
 	}
-
 	public String [] dajSmjerove (Spinner sp) {
 		String [] s = new String[2];
 		s[0] = (String) sp.getItemAtPosition(0);
 		s[1] = (String) sp.getItemAtPosition(1);
 		return s;
 	}
-
 }
 

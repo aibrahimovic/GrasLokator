@@ -33,12 +33,12 @@
         android:layout_marginTop="200dp"
         android:layout_below="@+id/slika"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#000066" />
+        android:textColor="#4682B4" />
     
     <View
 		android:layout_width="fill_parent"
 		android:layout_height="2dp"
-		android:background="#000066" />
+		android:background="#4682B4" />
 
     <AutoCompleteTextView
         android:id="@+id/username"
@@ -80,7 +80,7 @@
         android:layout_alignLeft="@+id/textView2"
         android:layout_centerVertical="true"
         android:layout_marginTop="70dp"
-        android:background="#000066"
+        android:background="#4682B4"
         android:fadingEdge="vertical"
         android:text="Prijavi se"
         android:textAppearance="?android:attr/textAppearanceLarge"

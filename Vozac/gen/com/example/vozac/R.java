@@ -1699,6 +1699,7 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f02007a;
         public static final int abc_textfield_searchview_right_holo_light=0x7f02007b;
         public static final int ic_launcher=0x7f02007c;
+        public static final int splash=0x7f02007d;
     }
     public static final class id {
         public static final int action_bar=0x7f050022;
@@ -1738,6 +1739,7 @@ containing a value of this type.
         public static final int icon=0x7f05002e;
         public static final int ifRoom=0x7f05000c;
         public static final int image=0x7f05002b;
+        public static final int imageView1=0x7f05005a;
         public static final int kvar=0x7f050048;
         public static final int linija=0x7f050052;
         public static final int linija1=0x7f050050;
@@ -1853,7 +1855,8 @@ containing a value of this type.
         public static final int activity_kvar=0x7f030020;
         public static final int activity_login=0x7f030021;
         public static final int activity_postavke=0x7f030022;
-        public static final int support_simple_spinner_dropdown_item=0x7f030023;
+        public static final int activity_splash=0x7f030023;
+        public static final int support_simple_spinner_dropdown_item=0x7f030024;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1914,6 +1917,7 @@ containing a value of this type.
         public static final int title_activity_drugi=0x7f0a0011;
         public static final int title_activity_kvar=0x7f0a0012;
         public static final int title_activity_postavke=0x7f0a0013;
+        public static final int title_activity_splash=0x7f0a0014;
     }
     public static final class style {
         /** 

@@ -9,10 +9,13 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.R;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.vozac.Login;
 import com.example.vozac.Postavke;
@@ -21,12 +24,14 @@ import com.example.vozac.Klase.Vozac;
 public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 
 	private Vozac v;
-	private Context activity;
-
+	//private Context activity;
+	private Login activity;
 	private String username = null;
 	private String password = null;
+	
 
-	public UcitajVozaca(Context a) {
+
+	public UcitajVozaca(Login a) {
 		this.activity = a;
 	}
 
@@ -46,6 +51,7 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 
 			HttpResponse response = httpClient.execute(httpGet);
 			Log.d("response", url + "?korisnickoIme=" + username + "&password=" + password);
+			
 			return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,17 +79,25 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 				id = id.replace("<!-- End Of Analytics Code -->", "");
 				Log.d("info2", response);
 
-				v.setId(id);
-
-				Intent i = new Intent(activity, Postavke.class);
-				i.putExtra("username", username);
-				i.putExtra("password", password);
-				i.putExtra("idKorisnika", id);
-				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				activity.startActivity(i);
-			
+				
+				if (id != " ") {
+				
+					Intent i = new Intent(activity, Postavke.class);
+					i.putExtra("username", username);
+					i.putExtra("password", password);
+					i.putExtra("idKorisnika", id);
+					i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(i);
+					
+					activity.status.setVisibility(View.GONE);
+				}
+				else {
+					activity.status.setVisibility(View.VISIBLE);
+				}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 }

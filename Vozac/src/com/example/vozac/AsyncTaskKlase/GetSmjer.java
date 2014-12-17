@@ -73,6 +73,7 @@ public class GetSmjer extends AsyncTask <String, Void, String> {
 				String [] obaSmjera = new String[smjerovi.size()];
 				obaSmjera = smjerovi.toArray(obaSmjera);
 			
+				
 			    ArrayAdapter adapter3 = new ArrayAdapter(activity, android.R.layout.simple_spinner_item, obaSmjera);
 			    activity.smjer.setAdapter(adapter3);
 			} 

@@ -17,6 +17,8 @@ public class Login extends Activity {
 
 	private Vozac vozac;
 	public EditText username, sifra;
+	public TextView status;
+	private static int Status;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,28 +28,27 @@ public class Login extends Activity {
         final Button pocni = (Button) findViewById (R.id.prijava);
         username = (EditText) findViewById(R.id.username);
         sifra = (EditText) findViewById(R.id.sifra);
-        final TextView status = (TextView) findViewById(R.id.textView1);
+        status = (TextView) findViewById(R.id.textView1);
         final ImageView iv = (ImageView)findViewById(R.id.slika);
         iv.setImageResource(R.drawable.ic_launcher);
     
         vozac = new Vozac();
         vozac.setId(" ");
-        
-        
+                
         username.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				status.setVisibility(View.GONE);
+				getStatus().setVisibility(View.GONE);
 			}	
         });
         sifra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				status.setVisibility(View.GONE);
+				getStatus().setVisibility(View.GONE);
 			}	
         });
 
-        
+       // UcitajVozaca uv = new UcitajVozaca(this);
         pocni.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -55,19 +56,28 @@ public class Login extends Activity {
 				vozac.setUsername(username.getText().toString());
 				vozac.setSifra(sifra.getText().toString());
 				Log.d("iz Logina", vozac.getUsername());
-				new UcitajVozaca(getApplicationContext()).execute(vozac);
 				
-				//String pomocni = String.valueOf(vozac.getId());
+				if (username.getText().toString().equals(" ") || sifra.getText().toString().equals(" ")) {
+					status.setVisibility(View.VISIBLE);
+				}
 				
-				//if(!pomocni.equals(" ")) {
-				//	Intent i = new Intent (Login.this, Postavke.class);
-					//startActivity(i);
-					//}
-					//else {
-					//	status.setVisibility(View.VISIBLE);
-					//}
+				//new UcitajVozaca(getApplicationContext()).execute(vozac);
+				new UcitajVozaca(Login.this).execute(vozac);
+				//uv.execute(vozac);
+
 			}
 		});
         
     }
+    
+    public void postaviStatus () {
+    	getStatus().setVisibility(View.VISIBLE);
+    }
+
+	public TextView getStatus() {
+		return status;
+	}
+	public void setStatus(TextView status) {
+		this.status = status;
+	}
 }
