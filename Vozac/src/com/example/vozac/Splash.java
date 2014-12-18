@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -27,11 +28,10 @@ public class Splash extends Activity implements LocationListener {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_splash);
 		
-		final Intent i = new Intent(this, Login.class);
+
 		mHandler.postDelayed (new Runnable() {
 			public void run() {
-				//dajLokaciju(true);
-				startActivity(i);
+				dajLokaciju(true);
 			}
 		}, 3000);
 	}
@@ -45,7 +45,20 @@ public class Splash extends Activity implements LocationListener {
 			location = manager.getLastKnownLocation(provider);
 			if (location != null) {
 				mojaLokacija = location;
+				Log.d("iz logina lokacija", String.valueOf(mojaLokacija.getLatitude()));
+				Log.d("iz logina lokacija", String.valueOf(mojaLokacija.getLongitude()));
+				
 				Intent intent = new Intent(this, Login.class);
+				
+				/*Intent in2 = new Intent (this, Postavke.class);
+				in2.putExtra("lat", String.valueOf(mojaLokacija.getLatitude()));
+				in2.putExtra("lon", String.valueOf(mojaLokacija.getLongitude()));
+				in2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
+				
+				intent.putExtra("lat", String.valueOf(mojaLokacija.getLatitude()));
+				intent.putExtra("lon", String.valueOf(mojaLokacija.getLongitude()));
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				
 				startActivity(intent);
 				return location;
 			}
@@ -81,7 +94,7 @@ public class Splash extends Activity implements LocationListener {
 		super.onResume();
 		mHandler.postDelayed(new Runnable() {
 			public void run() {
-				//dajLokaciju(false);
+				dajLokaciju(false);
 			}
 		}, 3000);
 		

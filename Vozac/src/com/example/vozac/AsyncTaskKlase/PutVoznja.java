@@ -81,11 +81,7 @@ public class PutVoznja extends AsyncTask<String, Void, String> {
 		
 		Log.d("info", "Usao u onPostExecute u put");
 		try {
-			mHandler.postDelayed (new Runnable() {
-				public void run() {
-					new PutVoznja(activity);
-				}
-			}, 5000);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			

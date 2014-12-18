@@ -49,8 +49,8 @@ public class Postavke extends Activity {
 	public String brojLinije = null;
 	public String smjer1 = null;
 	public String smjer2 = null;
-	public double lat = 0;
-	public double lon = 0;
+	private String lat = null;
+	private String lon = null;
 	
 	
 	private Voznja voznja = new Voznja();
@@ -64,10 +64,16 @@ public class Postavke extends Activity {
 		username = i.getStringExtra("username");
 		password = i.getStringExtra("password");
 		idKorisnika = i.getStringExtra("idKorisnika");
+		lat = i.getStringExtra("lat");
+		lon = i.getStringExtra("lon");
+		
+		Log.d("ucitani lat", String.valueOf(lat));
+		Log.d("ucitani lon", String.valueOf(lon));
 		
 		Log.d("ucitani username", username);
 		Log.d("ucitani pass", password);
 		Log.d("ucitani id", idKorisnika);
+
 		
 		final Button pocni = (Button) findViewById (R.id.vozi);
 		tip = (Spinner) findViewById (R.id.tip);
@@ -179,6 +185,7 @@ public class Postavke extends Activity {
 			public void onClick(View v) {				
 				zapocniVoznju();
 				pv.execute(voznja);
+				
 			}
 		});
 		
@@ -195,12 +202,9 @@ public class Postavke extends Activity {
 		voznja.setPassword(password);
 		voznja.setSmjer1(smjer1);
 		voznja.setSmjer2(smjer2);
-		//lat = mojaLokacija.getLatitude();
-		//lon = mojaLokacija.getLongitude();
 		voznja.setLat(lat);
 		voznja.setLon(lon);
-		Log.d("lat2", String.valueOf(lat));
-		Log.d("lon2", String.valueOf(lon));		
+	
 	}
 	
 	public String[] getLinije() {

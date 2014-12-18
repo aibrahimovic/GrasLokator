@@ -1,5 +1,7 @@
 package com.example.vozac;
 
+import java.util.TimerTask;
+
 import com.example.vozac.AsyncTaskKlase.DeleteVoznja;
 import com.example.vozac.AsyncTaskKlase.PostVoznja;
 import com.example.vozac.AsyncTaskKlase.PutVoznja;
@@ -8,6 +10,7 @@ import com.example.vozac.Klase.Voznja;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,12 +35,26 @@ public class Drugi extends Activity {
 	private String lat = null;
 	private String lon = null;
 	Postavke p;
+	private Handler mHandler = new Handler();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_drugi);
 	
+		/*mTimer.scheduleAtFixedRate(new TimerTask() {
+		    @Override
+		    public void run() {
+		           new PutVoznja(Drugi.this);
+		         }
+		    }, 0, 5000);*/
+		
+		mHandler.postDelayed (new Runnable() {
+			public void run() {
+				new PutVoznja(Drugi.this);
+			}
+		}, 5000);
+		
 		Intent in = getIntent();	
 		Intent in7 = getIntent();
 		
@@ -116,7 +133,7 @@ public class Drugi extends Activity {
 
 			in6.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(in6);
-			
+		
 			}
 		});
         
@@ -162,6 +179,8 @@ public class Drugi extends Activity {
 		voznja.setPassword(password);
 		voznja.setSmjer1(smjer1);
 		voznja.setSmjer2(smjer2);
+		voznja.setLat(lat);
+		voznja.setLon(lon);
 	}
 	
 }

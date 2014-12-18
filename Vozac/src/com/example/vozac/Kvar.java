@@ -26,10 +26,8 @@ public class Kvar extends Activity {
 	private Voznja voznja = new Voznja();
 	public TextView trenutni_smjer;
 	private String idVoznje = null;
-	private Double lat = null;
-	private Double lon = null;	
-	private String s_lat = null;
-	private String s_lon = null;
+	private String lat = null;
+	private String lon = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +45,8 @@ public class Kvar extends Activity {
 		brojLinije = in6.getStringExtra("brojLinije");
 		smjer1 = in6.getStringExtra("smjer1");
 		smjer2 = in6.getStringExtra("smjer2");
-		s_lat = in6.getStringExtra("lat");
-		s_lon = in6.getStringExtra("lon");
+		lat = in6.getStringExtra("lat");
+		lon = in6.getStringExtra("lon");
 		
 		
 		final Button kvar = (Button) findViewById (R.id.kvar);
@@ -100,12 +98,8 @@ public class Kvar extends Activity {
 		voznja.setPassword(password);
 		voznja.setSmjer1(smjer1);
 		voznja.setSmjer2(smjer2);
-		//lat = Double.valueOf(s_lat);
-		//lon = Double.valueOf(s_lon);
-		//lat = mojaLokacija.getLatitude();
-		//lon = mojaLokacija.getLongitude();
-		//voznja.setLat(lat);
-		//voznja.setLon(lon);	
+		voznja.setLat(lat);
+		voznja.setLon(lon);	
 	}
 	
 }

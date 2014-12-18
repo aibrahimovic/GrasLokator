@@ -81,11 +81,14 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 
 				
 				if (id != " ") {
-				
+					
+					
 					Intent i = new Intent(activity, Postavke.class);
 					i.putExtra("username", username);
 					i.putExtra("password", password);
 					i.putExtra("idKorisnika", id);
+					i.putExtra ("lat", activity.lat);
+					i.putExtra ("lon", activity.lon);
 					i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(i);
 					

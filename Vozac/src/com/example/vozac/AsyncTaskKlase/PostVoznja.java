@@ -35,10 +35,8 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 
 	private String username = null;
 	private String password = null;
-	private Double lat = null;
-	private Double lon = null;
-	private String s_lat = null;
-	private String s_lon = null;
+	private String lat = null;
+	private String lon = null;
 	private String idKorisnika = null;
 	private String idVozila = null;
 	private String idLinije = null;
@@ -69,8 +67,8 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 		brojLinije = String.valueOf(v.getBrojLinije());
 		smjer1 = v.getSmjer1();
 		smjer2 = v.getSmjer2();
-		s_lat = String.valueOf(v.getLat());
-		s_lon = String.valueOf(v.getLon());
+		lat = v.getLat();
+		lon = v.getLon();
 		
 		try {
 			
@@ -81,14 +79,14 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 			Log.d("idVozila", idVozila);
 			Log.d("idLinije", idLinije);
 			Log.d("idVoznje", idVoznje);
-		
+
 			
 			if (idVoznje != " ") {
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(8);
 				nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
 				nameValuePairs.add(new BasicNameValuePair("sifra", password));
-				nameValuePairs.add(new BasicNameValuePair("lat", s_lat));
-				nameValuePairs.add(new BasicNameValuePair("lon", s_lon));
+				nameValuePairs.add(new BasicNameValuePair("lat", lat));
+				nameValuePairs.add(new BasicNameValuePair("lon", lon));
 				nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
 				nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
 				nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
@@ -96,15 +94,15 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				
 				HttpResponse response = httpclient.execute(httppost);
-				//return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+				return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
 			}
-			
+		
 			else {
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(7);
 				nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
 				nameValuePairs.add(new BasicNameValuePair("sifra", password));
-				nameValuePairs.add(new BasicNameValuePair("lat", s_lat));
-				nameValuePairs.add(new BasicNameValuePair("lon", s_lon));
+				nameValuePairs.add(new BasicNameValuePair("lat", lat));
+				nameValuePairs.add(new BasicNameValuePair("lon", lon));
 				nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
 				nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
 				nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
@@ -125,14 +123,14 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 		
 		Log.d("info", "Usao u onPostExecute voznje");
 		try {
+			Log.d("u postu", response);
 			
 			final String jsonObj = new JSONObject(response).getString("idVoznje");
 			id = jsonObj;
-				
 			id = id.replace("<!-- Hosting24 Analytics Code -->", "");
 			id = id.replace("<script type=\"text/javascript\" src=\"http://stats.hosting24.com/count.php\"></script>", "");
 			id = id.replace("<!-- End Of Analytics Code -->", "");
-				
+			
 			Intent in = new Intent(activity, Drugi.class);
 			in.putExtra("username", username);
 			in.putExtra("password", password);
@@ -149,10 +147,12 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activity.startActivity(in);
 			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 		
 	}	
 }

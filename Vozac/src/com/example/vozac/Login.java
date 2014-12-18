@@ -2,6 +2,7 @@ package com.example.vozac;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,9 @@ public class Login extends Activity {
 	private Vozac vozac;
 	public EditText username, sifra;
 	public TextView status;
+	public String lat, lon;
 	private static int Status;
+
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,19 @@ public class Login extends Activity {
         status = (TextView) findViewById(R.id.textView1);
         final ImageView iv = (ImageView)findViewById(R.id.slika);
         iv.setImageResource(R.drawable.ic_launcher);
-    
+        
+        Intent intent = getIntent();
+        lat = intent.getStringExtra("lat");
+        lon = intent.getStringExtra("lon");
+        
+        Log.d("ucitani lat iz login", String.valueOf(lat));
+		Log.d("ucitani lon iz login", String.valueOf(lon));
+        
+        /*Intent in2 = new Intent (this, Postavke.class);
+        in2.putExtra("lat", lat);
+        in2.putExtra("lon", lon);
+        in2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
+        
         vozac = new Vozac();
         vozac.setId(" ");
                 
@@ -48,7 +63,6 @@ public class Login extends Activity {
 			}	
         });
 
-       // UcitajVozaca uv = new UcitajVozaca(this);
         pocni.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -60,10 +74,9 @@ public class Login extends Activity {
 				if (username.getText().toString().equals(" ") || sifra.getText().toString().equals(" ")) {
 					status.setVisibility(View.VISIBLE);
 				}
-				
-				//new UcitajVozaca(getApplicationContext()).execute(vozac);
+
 				new UcitajVozaca(Login.this).execute(vozac);
-				//uv.execute(vozac);
+				
 
 			}
 		});

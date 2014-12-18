@@ -53,11 +53,9 @@ public class DeleteVoznja extends AsyncTask<String, Void, Void> {
 		HttpDelete httpdelete = new HttpDelete(url + "?korisnickoIme=" + username + "&password=" + password + "&idVoznje=" + idVoznje);
 		try {
 			HttpResponse response = httpclient.execute(httpdelete);
-			Log.d("ovo je pravo vazno polje", EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		        
 		return null;
 	}
 

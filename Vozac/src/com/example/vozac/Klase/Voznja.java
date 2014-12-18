@@ -9,8 +9,8 @@ public class Voznja {
 	private int idLinije;
 	private int brojLinije;
 	private boolean aktivan;
-	private double lat;
-	private double lon;
+	private String lat;
+	private String lon;
 	private String username;
 	private String password;
 	private String smjer1;
@@ -52,18 +52,6 @@ public class Voznja {
 	public void setAktivan(boolean aktivan) {
 		this.aktivan = aktivan;
 	}
-	public double getLat() {
-		return lat;
-	}
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-	public double getLon() {
-		return lon;
-	}
-	public void setLon(double lon) {
-		this.lon = lon;
-	}
 	public String getUsername() {
 		return username;
 	}
@@ -93,5 +81,17 @@ public class Voznja {
 	}
 	public void setSmjer2(String smjer2) {
 		this.smjer2 = smjer2;
+	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	public String getLon() {
+		return lon;
+	}
+	public void setLon(String lon) {
+		this.lon = lon;
 	}
 }
