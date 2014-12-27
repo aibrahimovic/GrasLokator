@@ -28,6 +28,8 @@ public class Kvar extends Activity {
 	private String idVoznje = null;
 	private String lat = null;
 	private String lon = null;
+	private String id1 = null;
+	private String id2 = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class Kvar extends Activity {
 		smjer2 = in6.getStringExtra("smjer2");
 		lat = in6.getStringExtra("lat");
 		lon = in6.getStringExtra("lon");
+		id1 = in6.getStringExtra("id1");
+		id2 = in6.getStringExtra("id2");
 		
 		
 		final Button kvar = (Button) findViewById (R.id.kvar);
@@ -73,6 +77,8 @@ public class Kvar extends Activity {
 				in7.putExtra("smjer1", smjer1);
 				in7.putExtra("smjer2", smjer2);
 				in7.putExtra("status", "kvar");
+				in7.putExtra("id1", id1);
+				in7.putExtra("id2", id2);
 
 				in7.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				
@@ -100,6 +106,8 @@ public class Kvar extends Activity {
 		voznja.setSmjer2(smjer2);
 		voznja.setLat(lat);
 		voznja.setLon(lon);	
+		voznja.setId1(id1);
+		voznja.setId2(id2);
 	}
 	
 }

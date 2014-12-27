@@ -51,6 +51,7 @@ public class Postavke extends Activity {
 	public String smjer2 = null;
 	private String lat = null;
 	private String lon = null;
+	public String id1, id2 = null;
 	
 	
 	private Voznja voznja = new Voznja();
@@ -94,10 +95,11 @@ public class Postavke extends Activity {
 	    GetTipovi gp = new GetTipovi(this); 
 	    gp.execute(username, password);
 	    
+	    
 	    final GetBrojVozila gbv = new GetBrojVozila(this);
 	    tip.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 	        @Override
-	        public void onItemSelected(AdapterView adapter, View v, int i, long lng) {              
+	        public void onItemSelected(AdapterView adapter, View v, int i, long lng) {   
 	        	String b = tip.getSelectedItem().toString();
 	        	String indeks = String.valueOf(tip.getSelectedItemPosition());
 	        	Log.d("indesk pozicijie", indeks);
@@ -204,7 +206,8 @@ public class Postavke extends Activity {
 		voznja.setSmjer2(smjer2);
 		voznja.setLat(lat);
 		voznja.setLon(lon);
-	
+		voznja.setId1(id1);
+		voznja.setId2(id2);
 	}
 	
 	public String[] getLinije() {

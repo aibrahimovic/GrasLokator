@@ -1,5 +1,8 @@
 package com.example.vozac;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import com.example.vozac.AsyncTaskKlase.DeleteVoznja;
@@ -8,7 +11,10 @@ import com.example.vozac.AsyncTaskKlase.PutVoznja;
 import com.example.vozac.Klase.Voznja;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -36,25 +42,22 @@ public class Drugi extends Activity {
 	private String lon = null;
 	Postavke p;
 	private Handler mHandler = new Handler();
+	public ArrayList<String> idijevi = new ArrayList<String>();
+	public String id1 = null;
+	public String id2 = null;
+	static private Location mojaLokacija;
 	
+	Handler handler = new Handler();
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_drugi);
-	
-		/*mTimer.scheduleAtFixedRate(new TimerTask() {
-		    @Override
-		    public void run() {
-		           new PutVoznja(Drugi.this);
-		         }
-		    }, 0, 5000);*/
-		
-		mHandler.postDelayed (new Runnable() {
-			public void run() {
-				new PutVoznja(Drugi.this);
-			}
-		}, 5000);
-		
+
+		mojaLokacija = dajLokaciju(true);
+		lat =  String.valueOf(mojaLokacija.getLatitude());
+		lon = String.valueOf(mojaLokacija.getLongitude());
+
 		Intent in = getIntent();	
 		Intent in7 = getIntent();
 		
@@ -68,9 +71,12 @@ public class Drugi extends Activity {
 			brojLinije = in7.getStringExtra("brojLinije");
 			smjer1 = in7.getStringExtra("smjer1");
 			smjer2 = in7.getStringExtra("smjer2");
-			lat = in7.getStringExtra("lat");
-			lon = in7.getStringExtra("lon");
+			//lat = in7.getStringExtra("lat");
+			//lon = in7.getStringExtra("lon");
+			id1 = in7.getStringExtra("id1");
+			id2 = in7.getStringExtra("id2");
 		}
+		
 		else {
 			username = in.getStringExtra("username");
 			password = in.getStringExtra("password");
@@ -81,9 +87,15 @@ public class Drugi extends Activity {
 			brojLinije = in.getStringExtra("brojLinije");
 			smjer1 = in.getStringExtra("smjer1");
 			smjer2 = in.getStringExtra("smjer2");
-			lat = in.getStringExtra("lat");
-			lon = in.getStringExtra("lon");
+			//lat = in.getStringExtra("lat");
+			//lon = in.getStringExtra("lon");
+			id1 = in.getStringExtra("id1");
+			id2 = in.getStringExtra("id2");
 		}
+		
+		Log.d("idijevi koji su dosli pravi", idLinija);
+		Log.d("idijevi koji su dosli", id1);
+		Log.d("idijevi koji su dosli", id2);
 		
 		PutVoznja putV = new PutVoznja (this);
 		putV.execute(username, password, idVoznje, lat, lon);
@@ -130,6 +142,8 @@ public class Drugi extends Activity {
 			in6.putExtra("brojLinije", brojLinije);
 			in6.putExtra("smjer1", smjer1);
 			in6.putExtra("smjer2", smjer2);
+			in6.putExtra("id1", id1);
+			in6.putExtra("id2", id2);
 
 			in6.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(in6);
@@ -161,13 +175,19 @@ public class Drugi extends Activity {
 				smjer2 = smjer1;
 				smjer1 = pomocni;
 				
+				idLinija = id2;
+				String pomocni2 = id2;
+				id2 = id1;
+				id1 = pomocni2;
+				
 				dv2.execute(username, password, idVoznje);
 				zapocniVoznju();
 				pv2.execute(voznja);
+				
+				Log.d("trenutni id", idLinija);
 			}
 		});
 	}
-	
 	
 	public void zapocniVoznju() {
 		voznja.setIdVoznje(" ");
@@ -181,6 +201,26 @@ public class Drugi extends Activity {
 		voznja.setSmjer2(smjer2);
 		voznja.setLat(lat);
 		voznja.setLon(lon);
+		voznja.setId1(id1);
+		voznja.setId2(id2);
+	}
+	
+	public Location dajLokaciju(boolean enabledProvidersOnly) {
+		LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		Location location = null;
+		List<String> providers = manager.getProviders(enabledProvidersOnly);
+
+		for (String provider : providers) {
+			location = manager.getLastKnownLocation(provider);
+			if (location != null) {
+				mojaLokacija = location;
+				Log.d("iz logina lokacija", String.valueOf(mojaLokacija.getLatitude()));
+				Log.d("iz logina lokacija", String.valueOf(mojaLokacija.getLongitude()));
+
+				return location;
+			}
+		}
+		return null;
 	}
 	
 }

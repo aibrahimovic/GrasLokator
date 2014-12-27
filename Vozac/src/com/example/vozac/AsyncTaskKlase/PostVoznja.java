@@ -45,6 +45,8 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 	public String smjer2 = null;
 	public String id;
 	public String idVoznje = " ";
+	public String id1 = null;
+	public String id2 = null;
 	
 	public PostVoznja(Context a) {
 		this.activity = a;
@@ -69,17 +71,15 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 		smjer2 = v.getSmjer2();
 		lat = v.getLat();
 		lon = v.getLon();
+		id1 = v.getId1();
+		id2 = v.getId2();
 		
 		try {
 			
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost("http://farisc.comlu.com/Voznje.php");
 			
-			Log.d("idKorisnika", idKorisnika);
-			Log.d("idVozila", idVozila);
-			Log.d("idLinije", idLinije);
-			Log.d("idVoznje", idVoznje);
-
+			Log.d("iz post vozilo 1", idVozila);
 			
 			if (idVoznje != " ") {
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(8);
@@ -89,8 +89,8 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 				nameValuePairs.add(new BasicNameValuePair("lon", lon));
 				nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
 				nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
-				nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
-				nameValuePairs.add(new BasicNameValuePair("idVoznje ", idVoznje ));
+				nameValuePairs.add(new BasicNameValuePair("idVozila", idVozila));
+				nameValuePairs.add(new BasicNameValuePair("idVoznje", idVoznje));
 				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				
 				HttpResponse response = httpclient.execute(httppost);
@@ -105,8 +105,9 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 				nameValuePairs.add(new BasicNameValuePair("lon", lon));
 				nameValuePairs.add(new BasicNameValuePair("idKorisnika", idKorisnika));
 				nameValuePairs.add(new BasicNameValuePair("idLinije", idLinije));
-				nameValuePairs.add(new BasicNameValuePair("idVozila ", idVozila ));
+				nameValuePairs.add(new BasicNameValuePair("idVozila", idVozila ));
 				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				
 				
 				HttpResponse response = httpclient.execute(httppost);
 				return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
@@ -143,6 +144,8 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 			in.putExtra("brojLinije", brojLinije);
 			in.putExtra("smjer1", smjer1);
 			in.putExtra("smjer2", smjer2);
+			in.putExtra("id1", id1);
+			in.putExtra("id2", id2);
 	
 			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activity.startActivity(in);

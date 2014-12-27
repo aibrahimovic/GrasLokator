@@ -34,7 +34,6 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 	public UcitajVozaca(Login a) {
 		this.activity = a;
 	}
-
 	@Override
 	protected String doInBackground(Vozac... params) {
 		Log.d("info", "Usao u doInBackground");
@@ -80,9 +79,7 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 				Log.d("info2", response);
 
 				
-				if (id != " ") {
-					
-					
+				if (id != "") {
 					Intent i = new Intent(activity, Postavke.class);
 					i.putExtra("username", username);
 					i.putExtra("password", password);
@@ -91,11 +88,12 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 					i.putExtra ("lon", activity.lon);
 					i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(i);
-					
-					activity.status.setVisibility(View.GONE);
+					activity.ukloniStatus();
+					//activity.status.setVisibility(View.GONE);
 				}
 				else {
-					activity.status.setVisibility(View.VISIBLE);
+					activity.postaviStatus();
+					//activity.status.setVisibility(View.VISIBLE);
 				}
 		
 		} catch (Exception e) {

@@ -50,11 +50,6 @@ public class Splash extends Activity implements LocationListener {
 				
 				Intent intent = new Intent(this, Login.class);
 				
-				/*Intent in2 = new Intent (this, Postavke.class);
-				in2.putExtra("lat", String.valueOf(mojaLokacija.getLatitude()));
-				in2.putExtra("lon", String.valueOf(mojaLokacija.getLongitude()));
-				in2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
-				
 				intent.putExtra("lat", String.valueOf(mojaLokacija.getLatitude()));
 				intent.putExtra("lon", String.valueOf(mojaLokacija.getLongitude()));
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

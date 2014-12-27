@@ -41,12 +41,7 @@ public class Login extends Activity {
         
         Log.d("ucitani lat iz login", String.valueOf(lat));
 		Log.d("ucitani lon iz login", String.valueOf(lon));
-        
-        /*Intent in2 = new Intent (this, Postavke.class);
-        in2.putExtra("lat", lat);
-        in2.putExtra("lon", lon);
-        in2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
-        
+                
         vozac = new Vozac();
         vozac.setId(" ");
                 
@@ -71,20 +66,20 @@ public class Login extends Activity {
 				vozac.setSifra(sifra.getText().toString());
 				Log.d("iz Logina", vozac.getUsername());
 				
-				if (username.getText().toString().equals(" ") || sifra.getText().toString().equals(" ")) {
+				/*if (username.getText().toString().equals(" ") || sifra.getText().toString().equals(" ")) {
 					status.setVisibility(View.VISIBLE);
-				}
-
+				}*/
 				new UcitajVozaca(Login.this).execute(vozac);
-				
-
 			}
 		});
-        
     }
     
     public void postaviStatus () {
     	getStatus().setVisibility(View.VISIBLE);
+    }
+    
+    public void ukloniStatus () {
+    	getStatus().setVisibility(View.GONE);
     }
 
 	public TextView getStatus() {

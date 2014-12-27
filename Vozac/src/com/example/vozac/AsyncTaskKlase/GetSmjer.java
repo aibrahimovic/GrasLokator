@@ -23,9 +23,10 @@ import com.example.vozac.Klase.Vozilo;
 
 public class GetSmjer extends AsyncTask <String, Void, String> {
 
+	Drugi drugi;
 	private Postavke activity;
-	private String l;
-	Intent in3;
+	private String l, id;
+	
 	
 	public GetSmjer (Postavke a)
     {
@@ -59,15 +60,19 @@ public class GetSmjer extends AsyncTask <String, Void, String> {
 		
 		Log.d("info", "Usao u onPostExecute u smjeru");
 		ArrayList<String> smjerovi = new ArrayList<String> ();
-			
+		ArrayList<String> idijevi = new ArrayList<String> ();
+		
+		
 			try {
 				final JSONArray jsonObj = new JSONObject(response).getJSONArray("smjerovi");
 				
 				smjerovi.add(" ");
 				for (int i=0; i<jsonObj.length(); i++) {
 					
-					l = jsonObj.getJSONObject(i).getString("smjer");		
-					smjerovi.add(l);				
+					l = jsonObj.getJSONObject(i).getString("smjer");	
+					id = jsonObj.getJSONObject(i).getString("idLinije");
+					smjerovi.add(l);
+					idijevi.add(id);
 				}
 				
 				String [] obaSmjera = new String[smjerovi.size()];
@@ -76,6 +81,10 @@ public class GetSmjer extends AsyncTask <String, Void, String> {
 				
 			    ArrayAdapter adapter3 = new ArrayAdapter(activity, android.R.layout.simple_spinner_item, obaSmjera);
 			    activity.smjer.setAdapter(adapter3);
+			    
+			    activity.id1 = idijevi.get(0);
+			    activity.id2 = idijevi.get(1);
+			    
 			} 
 			catch (Exception e) {
 				e.printStackTrace();
