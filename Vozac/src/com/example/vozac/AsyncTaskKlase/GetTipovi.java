@@ -39,17 +39,14 @@ public class GetTipovi extends AsyncTask <String, Void, String> {
 	
 	@Override
 	protected String doInBackground(String... params) {
-		
-		Log.d("info", "Usao u doInBackground getTipovi");
+
 		String username = params[0];
 		String password = params[1];
-		Log.d("info2", "Usao u doInBackground getTipovi");
 		try {
 			String url = "http://farisc.comlu.com/TipoviVozila.php";	
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(url + "?korisnickoIme=" + username + "&password=" +password);
 			HttpResponse response = httpClient.execute(httpGet);
-			Log.d("response", url + "?korisnickoIme=" + username + "&password=" +password);	
 			return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);		
 		} 
 		catch (Exception e) {
@@ -61,7 +58,6 @@ public class GetTipovi extends AsyncTask <String, Void, String> {
 	@Override
 	protected void onPostExecute(String response) {
 		
-		Log.d("info", "Usao u onPostExecute u tipovima");
 		ArrayList<String> pomocna = new ArrayList<String> ();
 				
 		try {
@@ -70,11 +66,9 @@ public class GetTipovi extends AsyncTask <String, Void, String> {
 			pomocna.add(" ");
 			for (int i=0; i<jsonObj.length(); i++) {
 				naziv = jsonObj.getJSONObject(i).getString("naziv");
-				Log.d("info nazivi", naziv);
 				pomocna.add(naziv);
 			}
 			activity.setTipovi2(pomocna);
-			Log.d("iz getTipovi broj", String.valueOf(pomocna.size()));
 			
 			String [] tipovi = new String[pomocna.size()];
 		    tipovi = pomocna.toArray(tipovi);

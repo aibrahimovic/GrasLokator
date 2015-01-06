@@ -37,7 +37,6 @@ public class GetSmjer extends AsyncTask <String, Void, String> {
 	@Override
 	protected String doInBackground(String... params) {
 		
-		Log.d("info", "Usao u doInBackground linije");
 		String username = params[0];
 		String password = params[1];
 		String linija = params[2];
@@ -57,8 +56,6 @@ public class GetSmjer extends AsyncTask <String, Void, String> {
 	
 	protected void onPostExecute(String response) {
 		
-		
-		Log.d("info", "Usao u onPostExecute u smjeru");
 		ArrayList<String> smjerovi = new ArrayList<String> ();
 		ArrayList<String> idijevi = new ArrayList<String> ();
 		

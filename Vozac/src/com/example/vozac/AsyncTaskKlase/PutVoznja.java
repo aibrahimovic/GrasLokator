@@ -7,14 +7,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -22,13 +21,12 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.example.vozac.Drugi;
-import com.example.vozac.Login;
 import com.example.vozac.Klase.Voznja;
 
 public class PutVoznja extends AsyncTask<String, Void, String> {
 
 	private Voznja v;
-	private Drugi activity;
+	private Context activity;
 
 	private String username = null;
 	private String password = null;
@@ -44,14 +42,19 @@ public class PutVoznja extends AsyncTask<String, Void, String> {
 	public String idVoznje = null;
 	private Handler mHandler = new Handler();
 	static private Location mojaLokacija;
+
 	
-	public PutVoznja(Drugi a) {
-		this.activity = a;
+	public PutVoznja(Context b) {
+		this.activity = b;
 	}
+	
+	int status;
 
 	@Override
 	protected String doInBackground(String... params) {
-		Log.d("info", "Usao u doInBackground u put");
+		
+		Log.d("iz put", "put");
+		
 		username = params[0];
 		password = params[1];
 		idVoznje = params[2];
@@ -63,36 +66,41 @@ public class PutVoznja extends AsyncTask<String, Void, String> {
 		pom1 = String.valueOf(mojaLokacija.getLatitude());
 		pom2 = String.valueOf(mojaLokacija.getLongitude());
 		
+		
+		
 		lat = pom1;
 		lon = pom2;
-		
+
 		try {
-			Log.d("info", "Usao u doInBackground u put drugi dio");
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPut httpput = new HttpPut("http://farisc.comlu.com/Voznje.php");		
+			HttpPost httpput = new HttpPost("http://farisc.comlu.com/Voznje.php");		
 			
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
 			nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
 			nameValuePairs.add(new BasicNameValuePair("sifra", password));
 			nameValuePairs.add(new BasicNameValuePair("lat", lat));
 			nameValuePairs.add(new BasicNameValuePair("lon", lon));
-			nameValuePairs.add(new BasicNameValuePair("idVoznje ", idVoznje ));
+			nameValuePairs.add(new BasicNameValuePair("idVoznje", idVoznje ));
 			httpput.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			Log.d("info", "Usao u doInBackground u put treci dio");
+			
 			HttpResponse response = httpclient.execute(httpput);
+			status = response.getStatusLine().getStatusCode();
+			
 			return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
 	
-	
+
 	@Override
 	protected void onPostExecute(String response) {
+
 		final PutVoznja p = new PutVoznja(activity);
-		Log.d("info", "Usao u onPostExecute u put");
 		try {
 			new Handler().postDelayed(new Runnable() {
 		        @Override
@@ -110,13 +118,11 @@ public class PutVoznja extends AsyncTask<String, Void, String> {
 		Location location = null;
 		List<String> providers = manager.getProviders(enabledProvidersOnly);
 
+		
 		for (String provider : providers) {
 			location = manager.getLastKnownLocation(provider);
 			if (location != null) {
 				mojaLokacija = location;
-				Log.d("iz asynctaske", String.valueOf(mojaLokacija.getLatitude()));
-				Log.d("iz asynctaske", String.valueOf(mojaLokacija.getLongitude()));
-
 				return location;
 			}
 		}

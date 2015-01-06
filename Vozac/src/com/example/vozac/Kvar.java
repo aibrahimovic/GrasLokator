@@ -1,6 +1,7 @@
 package com.example.vozac;
 
 import com.example.vozac.AsyncTaskKlase.PostVoznja;
+import com.example.vozac.AsyncTaskKlase.PutVoznja;
 import com.example.vozac.Klase.Voznja;
 
 import android.app.Activity;
@@ -52,17 +53,24 @@ public class Kvar extends Activity {
 		id1 = in6.getStringExtra("id1");
 		id2 = in6.getStringExtra("id2");
 		
+		final Kvar aktivnost = this;
 		
 		final Button kvar = (Button) findViewById (R.id.kvar);
-		  
+		
+		//final PutVoznja putV2 = new PutVoznja (this);
+		
+		
 		final PostVoznja pv3 = new PostVoznja(this);
         kvar.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
+				
 				zapocniVoznju();
 				pv3.execute(voznja);
+				//putV2.execute(username, password, idVoznje, lat, lon);
+				
 				Intent in7 = new Intent (Kvar.this, Drugi.class);
 				
 				in7.putExtra("username", username);
@@ -98,7 +106,7 @@ public class Kvar extends Activity {
 		voznja.setIdVoznje(idVoznje);
 		voznja.setIdKorisnika(Integer.valueOf(idKorisnika));
 		voznja.setIdVozila(Integer.valueOf(idVozila));
-		voznja.setIdLinije(Integer.valueOf(idLinija));	
+		voznja.setIdLinija(String.valueOf(idLinija));	
 		voznja.setBrojLinije(Integer.valueOf(brojLinije));
 		voznja.setUsername(username);
 		voznja.setPassword(password);

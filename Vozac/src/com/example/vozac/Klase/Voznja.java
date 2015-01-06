@@ -6,7 +6,7 @@ public class Voznja {
 	private int idVozila;
 	private int idStanice;
 	private int idKorisnika;
-	private int idLinije;
+	private String idLinija;
 	private int brojLinije;
 	private boolean aktivan;
 	private String lat;
@@ -42,11 +42,11 @@ public class Voznja {
 	public void setIdKorisnika(int idKorisnika) {
 		this.idKorisnika = idKorisnika;
 	}
-	public int getIdLinije() {
-		return idLinije;
+	public String getIdLinija() {
+		return idLinija;
 	}
-	public void setIdLinije(int idLinije) {
-		this.idLinije = idLinije;
+	public void setIdLinija(String idLinija) {
+		this.idLinija = idLinija;
 	}
 	public boolean isAktivan() {
 		return aktivan;

@@ -38,10 +38,7 @@ public class Login extends Activity {
         Intent intent = getIntent();
         lat = intent.getStringExtra("lat");
         lon = intent.getStringExtra("lon");
-        
-        Log.d("ucitani lat iz login", String.valueOf(lat));
-		Log.d("ucitani lon iz login", String.valueOf(lon));
-                
+     
         vozac = new Vozac();
         vozac.setId(" ");
                 
@@ -64,8 +61,7 @@ public class Login extends Activity {
 			public void onClick(View v) {
 				vozac.setUsername(username.getText().toString());
 				vozac.setSifra(sifra.getText().toString());
-				Log.d("iz Logina", vozac.getUsername());
-				
+								
 				/*if (username.getText().toString().equals(" ") || sifra.getText().toString().equals(" ")) {
 					status.setVisibility(View.VISIBLE);
 				}*/

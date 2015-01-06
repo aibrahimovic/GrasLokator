@@ -46,6 +46,8 @@ public class Drugi extends Activity {
 	public String id1 = null;
 	public String id2 = null;
 	static private Location mojaLokacija;
+	public String pSmjer = "0";
+	
 	
 	Handler handler = new Handler();
 		
@@ -93,18 +95,9 @@ public class Drugi extends Activity {
 			id2 = in.getStringExtra("id2");
 		}
 		
-		Log.d("idijevi koji su dosli pravi", idLinija);
-		Log.d("idijevi koji su dosli", id1);
-		Log.d("idijevi koji su dosli", id2);
-		
-		PutVoznja putV = new PutVoznja (this);
+		final PutVoznja putV = new PutVoznja (this);
 		putV.execute(username, password, idVoznje, lat, lon);
-		
-		Log.d("username u Drugi", username);
-		Log.d("password u Drugi", password);
-		Log.d("idKorisnika u Drugi", idKorisnika);
-		Log.d("idVoznje u Drugi", idVoznje);
-		
+
 		voznja.setUsername(username);
 		voznja.setPassword(password);
 	
@@ -116,7 +109,6 @@ public class Drugi extends Activity {
 		final TextView trenutni_linija = (TextView) findViewById (R.id.brojLinije);
 		trenutni_smjer = (TextView) findViewById (R.id.smjerKojiVozi);
 		
-
 		trenutni_user.setText("Korisnièko ime: " + username);
 		trenutni_broj.setText("Broj vozila: " + idVozila);
 		trenutni_linija.setText("Linija: " + brojLinije);
@@ -130,7 +122,8 @@ public class Drugi extends Activity {
 		public void onClick(View v) {
 			dv.execute(username, password, idVoznje);
 			Intent in6 = new Intent (Drugi.this, Kvar.class);
-
+			putV.cancel(true);
+			
 			in6.putExtra("username", username);
 			in6.putExtra("password", password);
 			in6.putExtra("idKorisnika", idKorisnika);
@@ -146,18 +139,21 @@ public class Drugi extends Activity {
 			in6.putExtra("id2", id2);
 
 			in6.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			
 			startActivity(in6);
-		
+
 			}
 		});
         
+	
         final DeleteVoznja dv3 = new DeleteVoznja (this);
         odjava.setOnClickListener(new View.OnClickListener() {
-			
+		
 			@Override
 			public void onClick(View v) {
 				dv3.execute(username, password, idVoznje);
 				Intent i = new Intent (Drugi.this, Login.class);
+				putV.cancel(true);
 				startActivity(i);
 			}
 		});
@@ -169,31 +165,48 @@ public class Drugi extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				
+				dv2.execute(username, password, idVoznje);
 				trenutni_smjer.setText("Smjer: " + smjer2);
 				String pomocni = smjer2;
 				smjer2 = smjer1;
 				smjer1 = pomocni;
+				Log.d("prije zamjene id1", id1);
+				Log.d("prije zamjene id2", id2);
 				
-				idLinija = id2;
-				String pomocni2 = id2;
-				id2 = id1;
-				id1 = pomocni2;
+				if (idLinija.equals(id1)) {
+					Log.d("azra", "idLinije je jednak id1");
+					idLinija = id2;
+					String pomocni2 = id2;
+					id2 = id1;
+					id1 = pomocni2;
+					Log.d("iz prvog uslova id1", id1);
+					Log.d("iz prvog uslova id2", id2);
+				}
+				else {
+					idLinija = id1;
+					String pomocni2 = id1;
+					id1 = id2;
+					id2 = pomocni2;
+					Log.d("iz drugog uslova id1", id1);
+					Log.d("iz drugog uslova id2", id2);
+				}		
 				
-				dv2.execute(username, password, idVoznje);
+				Log.d("poslije zamjene id1", id1);
+				Log.d("poslije zamjene id2", id2);
+				
 				zapocniVoznju();
 				pv2.execute(voznja);
-				
-				Log.d("trenutni id", idLinija);
 			}
 		});
 	}
+	
 	
 	public void zapocniVoznju() {
 		voznja.setIdVoznje(" ");
 		voznja.setIdKorisnika(Integer.valueOf(idKorisnika));
 		voznja.setIdVozila(Integer.valueOf(idVozila));
-		voznja.setIdLinije(Integer.valueOf(idLinija));
+		Log.d("zapocni voznju nakon promjene smjera", idLinija);
+		voznja.setIdLinija(String.valueOf(idLinija));
 		voznja.setBrojLinije(Integer.valueOf(brojLinije));
 		voznja.setUsername(username);
 		voznja.setPassword(password);
@@ -214,8 +227,6 @@ public class Drugi extends Activity {
 			location = manager.getLastKnownLocation(provider);
 			if (location != null) {
 				mojaLokacija = location;
-				Log.d("iz logina lokacija", String.valueOf(mojaLokacija.getLatitude()));
-				Log.d("iz logina lokacija", String.valueOf(mojaLokacija.getLongitude()));
 
 				return location;
 			}

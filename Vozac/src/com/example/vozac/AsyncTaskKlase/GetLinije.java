@@ -28,15 +28,16 @@ public class GetLinije extends AsyncTask <String, Void, String> {
 	private Postavke activity;
 	private String li;
 
+	
 	public GetLinije (Postavke a)
     {
         this.activity = a;
     }
 	
+	
 	@Override
 	protected String doInBackground(String... params) {
 		
-		Log.d("info", "Usao u doInBackground linije");
 		String username = params[0];
 		String password = params[1];
 		String tip = params[2];
@@ -56,7 +57,6 @@ public class GetLinije extends AsyncTask <String, Void, String> {
 	
 	protected void onPostExecute(String response) {
 		
-		Log.d("info", "Usao u onPostExecute u linijama");
 		ArrayList<String> brojevi = new ArrayList<String> ();
 			
 			try {
@@ -68,7 +68,6 @@ public class GetLinije extends AsyncTask <String, Void, String> {
 					String id = jsonObj.getJSONObject(i).getString("idLinije");	
 					brojevi.add(li);
 					activity.idLinije.add(id);
-					Log.d ("linija", li);
 				}
 
 				String [] brojeviVozila = new String[brojevi.size()];

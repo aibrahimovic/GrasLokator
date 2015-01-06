@@ -36,7 +36,7 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 	}
 	@Override
 	protected String doInBackground(Vozac... params) {
-		Log.d("info", "Usao u doInBackground");
+		
 		v = params[0];
 		username = v.getUsername();
 		password = v.getSifra();
@@ -49,7 +49,7 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 			HttpGet httpGet = new HttpGet(url + "?korisnickoIme=" + username + "&password=" + password);
 
 			HttpResponse response = httpClient.execute(httpGet);
-			Log.d("response", url + "?korisnickoIme=" + username + "&password=" + password);
+			
 			
 			return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
 		} catch (Exception e) {
@@ -61,9 +61,7 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 	@Override
 	protected void onPostExecute(String response) {
 		try {
-			
-		Log.d("info", "Usao u onPostExecute");
-		Log.d("info", response);
+
 		String id;
 
 			final JSONArray jsonObj = new JSONObject(response).getJSONArray("korisnik");
@@ -72,11 +70,10 @@ public class UcitajVozaca extends AsyncTask<Vozac, Void, String> {
 			//} else {
 				id = jsonObj.getJSONObject(0).getString("idKorisnika");
 
-				Log.d("ovo je id - json", id);
 				id = id.replace("<!-- Hosting24 Analytics Code -->", "");
 				id = id.replace("<script type=\"text/javascript\" src=\"http://stats.hosting24.com/count.php\"></script>", "");
 				id = id.replace("<!-- End Of Analytics Code -->", "");
-				Log.d("info2", response);
+				
 
 				
 				if (id != "") {

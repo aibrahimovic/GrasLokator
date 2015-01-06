@@ -43,6 +43,8 @@ public class DeleteVoznja extends AsyncTask<String, Void, Void> {
 		password = params[1];
 		idVoznje = params[2];
 		
+		Log.d("brisem idVoznje", idVoznje);
+		
 		HttpClient httpclient = new DefaultHttpClient();
 		String url = "http://farisc.comlu.com/Voznje.php";
 	
@@ -61,10 +63,10 @@ public class DeleteVoznja extends AsyncTask<String, Void, Void> {
 
 	@Override
 	protected void onPostExecute(Void response) {
-		
+
 		Log.d("info", "Usao u onPostExecute delete voznje");
 		try {
-			//activity.trenutni_smjer.setText("azra");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			

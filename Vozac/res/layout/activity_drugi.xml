@@ -80,7 +80,7 @@
         android:layout_marginTop="70dp"
         android:background="#4682B4"
         android:fadingEdge="vertical"
-        android:text="Odjavi se"
+        android:text="Završi vožnju"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF" />
 
