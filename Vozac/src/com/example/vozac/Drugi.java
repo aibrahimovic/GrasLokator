@@ -46,10 +46,11 @@ public class Drugi extends Activity {
 	public String id1 = null;
 	public String id2 = null;
 	static private Location mojaLokacija;
-	public String pSmjer = "0";
+	public String stop = "0";
 	
 	
 	Handler handler = new Handler();
+	public PutVoznja putV = new PutVoznja (this);
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class Drugi extends Activity {
 			//lon = in7.getStringExtra("lon");
 			id1 = in7.getStringExtra("id1");
 			id2 = in7.getStringExtra("id2");
+			stop = in7.getStringExtra("stop");
 		}
 		
 		else {
@@ -95,9 +97,9 @@ public class Drugi extends Activity {
 			id2 = in.getStringExtra("id2");
 		}
 		
-		final PutVoznja putV = new PutVoznja (this);
 		putV.execute(username, password, idVoznje, lat, lon);
-
+		Log.d("prvi poziv put-a", stop);
+		
 		voznja.setUsername(username);
 		voznja.setPassword(password);
 	
@@ -120,10 +122,13 @@ public class Drugi extends Activity {
 		kvar.setOnClickListener(new View.OnClickListener() {	
 		@Override
 		public void onClick(View v) {
+			stop = "1";
+			
+			Log.d("info", "klik na kvar");
+			Log.d("stop iz klik na kvar", stop);
 			dv.execute(username, password, idVoznje);
 			Intent in6 = new Intent (Drugi.this, Kvar.class);
-			putV.cancel(true);
-			
+
 			in6.putExtra("username", username);
 			in6.putExtra("password", password);
 			in6.putExtra("idKorisnika", idKorisnika);
@@ -137,9 +142,10 @@ public class Drugi extends Activity {
 			in6.putExtra("smjer2", smjer2);
 			in6.putExtra("id1", id1);
 			in6.putExtra("id2", id2);
+			in6.putExtra("stop", stop);
 
 			in6.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			
+			putV.cancel(true);
 			startActivity(in6);
 
 			}
@@ -151,10 +157,13 @@ public class Drugi extends Activity {
 		
 			@Override
 			public void onClick(View v) {
+				stop = "1";
+				Log.d("iz odjava", stop);
+				Log.d("info", "klik na odjava");
 				dv3.execute(username, password, idVoznje);
 				Intent i = new Intent (Drugi.this, Login.class);
-				putV.cancel(true);
 				startActivity(i);
+				putV.cancel(true);
 			}
 		});
 		

@@ -31,6 +31,7 @@ public class Kvar extends Activity {
 	private String lon = null;
 	private String id1 = null;
 	private String id2 = null;
+	public String stop = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class Kvar extends Activity {
 		lon = in6.getStringExtra("lon");
 		id1 = in6.getStringExtra("id1");
 		id2 = in6.getStringExtra("id2");
+		stop = in6.getStringExtra("stop");
+		
 		
 		final Kvar aktivnost = this;
 		
@@ -65,12 +68,11 @@ public class Kvar extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				
-				
+
 				zapocniVoznju();
 				pv3.execute(voznja);
 				//putV2.execute(username, password, idVoznje, lat, lon);
-				
+				stop = "0";
 				Intent in7 = new Intent (Kvar.this, Drugi.class);
 				
 				in7.putExtra("username", username);
@@ -87,6 +89,7 @@ public class Kvar extends Activity {
 				in7.putExtra("status", "kvar");
 				in7.putExtra("id1", id1);
 				in7.putExtra("id2", id2);
+				in7.putExtra("stop", stop);
 
 				in7.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				
@@ -94,6 +97,7 @@ public class Kvar extends Activity {
 				Log.d("password u Kvar", password);
 				Log.d("idKorisnika u Kvar", idKorisnika);
 				Log.d("idVoznje u Kvar", idVoznje);
+				Log.d("stop iz Kvar", stop);
 				
 				startActivity(in7);	
 			}
@@ -102,6 +106,7 @@ public class Kvar extends Activity {
         
         
 	}
+	
 	public void zapocniVoznju() {
 		voznja.setIdVoznje(idVoznje);
 		voznja.setIdKorisnika(Integer.valueOf(idKorisnika));
@@ -118,4 +123,5 @@ public class Kvar extends Activity {
 		voznja.setId2(id2);
 	}
 	
+
 }

@@ -74,12 +74,13 @@ public class PostVoznja extends AsyncTask<Voznja, Void, String> {
 		id1 = v.getId1();
 		id2 = v.getId2();
 
+		
 		try {
 			
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost("http://farisc.comlu.com/Voznje.php");
 			
-			Log.d("idLinije iz post sada", idLinija);
+			Log.d("idVoznje iz post sada", idVoznje);
 			
 			if (idVoznje != " ") {
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);

@@ -26,7 +26,7 @@ import com.example.vozac.Klase.Voznja;
 public class PutVoznja extends AsyncTask<String, Void, String> {
 
 	private Voznja v;
-	private Context activity;
+	private Drugi activity;
 
 	private String username = null;
 	private String password = null;
@@ -42,19 +42,17 @@ public class PutVoznja extends AsyncTask<String, Void, String> {
 	public String idVoznje = null;
 	private Handler mHandler = new Handler();
 	static private Location mojaLokacija;
-
 	
-	public PutVoznja(Context b) {
+	public PutVoznja(Drugi b) {
 		this.activity = b;
 	}
 	
 	int status;
+	
 
 	@Override
 	protected String doInBackground(String... params) {
-		
-		Log.d("iz put", "put");
-		
+				
 		username = params[0];
 		password = params[1];
 		idVoznje = params[2];
@@ -66,28 +64,35 @@ public class PutVoznja extends AsyncTask<String, Void, String> {
 		pom1 = String.valueOf(mojaLokacija.getLatitude());
 		pom2 = String.valueOf(mojaLokacija.getLongitude());
 		
-		
-		
 		lat = pom1;
 		lon = pom2;
 
 		try {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httpput = new HttpPost("http://farisc.comlu.com/Voznje.php");		
-			
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
-			nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
-			nameValuePairs.add(new BasicNameValuePair("sifra", password));
-			nameValuePairs.add(new BasicNameValuePair("lat", lat));
-			nameValuePairs.add(new BasicNameValuePair("lon", lon));
-			nameValuePairs.add(new BasicNameValuePair("idVoznje", idVoznje ));
-			httpput.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			
-			HttpResponse response = httpclient.execute(httpput);
-			status = response.getStatusLine().getStatusCode();
-			
-			return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+			Log.d("stop status u doInBackground", activity.stop);
+			if (activity.stop.equals("0")) {
+				Log.d("iz put", "put");
+				HttpClient httpclient = new DefaultHttpClient();
+				HttpPost httpput = new HttpPost("http://farisc.comlu.com/Voznje.php");		
+				
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	
+				nameValuePairs.add(new BasicNameValuePair("korisnickoIme", username));
+				nameValuePairs.add(new BasicNameValuePair("sifra", password));
+				nameValuePairs.add(new BasicNameValuePair("lat", lat));
+				nameValuePairs.add(new BasicNameValuePair("lon", lon));
+				nameValuePairs.add(new BasicNameValuePair("idVoznje", idVoznje ));
+				httpput.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				
+				HttpResponse response = httpclient.execute(httpput);
+				status = response.getStatusLine().getStatusCode();
+				
+				return EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+			}
+			else {
+				Log.d("usao u else u doInBackground", activity.stop);
+				activity.stop = "1";
+				//this.cancel(true);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,18 +101,26 @@ public class PutVoznja extends AsyncTask<String, Void, String> {
 		return null;
 	}
 	
+	
 
 	@Override
 	protected void onPostExecute(String response) {
 
 		final PutVoznja p = new PutVoznja(activity);
 		try {
-			new Handler().postDelayed(new Runnable() {
-		        @Override
-		        public void run() {
-		            p.execute(username, password, idVoznje, lat, lon);
-		        }
-		    }, 10000);
+			Log.d("stop status u onPOst", activity.stop);
+			if (activity.stop.equals("0")) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						p.execute(username, password, idVoznje, lat, lon);
+						}
+					}, 10000);
+			}
+			else {
+				activity.stop = "1";
+				this.cancel(true);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
